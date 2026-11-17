@@ -57,7 +57,7 @@ class ExecutionEnvironment:
 
     def np_exec(self) -> tuple[str, int]:
         self.output_buffer = ""
-        for instruction in self.program:
+        for instruction in self.program.instructions:
             try:
                 self.execute_instruction(instruction)
             except BaseException as e:
@@ -67,7 +67,7 @@ class ExecutionEnvironment:
 
     def ip_exec(self) -> int:
         self.output_buffer = ""
-        for instruction in self.program:
+        for instruction in self.program.instructions:
             try:
                 self.execute_instruction(instruction)
             except BaseException as e:

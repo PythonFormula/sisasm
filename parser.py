@@ -65,7 +65,11 @@ class DecInst(Instruction):
         self.value = value
 
 
-Program = list[Instruction]
+class Program:
+    instructions: list[Instruction]
+
+    def __init__(self) -> None:
+        self.instructions = []
 
 
 class Parser(PointerClass[Token]):
@@ -113,11 +117,11 @@ class Parser(PointerClass[Token]):
 
     def parse_program(self) -> Program:
         self.consume_whitespace()
-        program: Program = []
+        program = Program()
         while (t := self.consume()):
             if t.token_type == TokenType.PRINT:
                 self.consume_whitespace()
-                program.append(
+                program.instructions.append(
                     PrintInst(Parser(self.collect_tokens(TokenType.NEWLINE)).parse_expression()))
             elif t.token_type == TokenType.LET:
                 self.consume_whitespace()
@@ -129,7 +133,7 @@ class Parser(PointerClass[Token]):
                     raise SyntaxError(f"No = after variable name in LET")
                 val_tokens = self.collect_tokens(TokenType.NEWLINE)
                 val = Parser(val_tokens).parse_expression()
-                program.append(LetInst(var, val))
+                program.instructions.append(LetInst(var, val))
             elif t.token_type == TokenType.INC or t.token_type == TokenType.DEC:
                 self.consume_whitespace()
                 var_token = self.consume()
@@ -140,9 +144,9 @@ class Parser(PointerClass[Token]):
                 val_tokens = self.collect_tokens(TokenType.NEWLINE)
                 val = Parser(val_tokens).parse_expression()
                 if t.token_type == TokenType.INC:
-                    program.append(IncInst(var, val))
+                    program.instructions.append(IncInst(var, val))
                 else:
-                    program.append(DecInst(var, val))
+                    program.instructions.append(DecInst(var, val))
             else:
                 raise SyntaxError(f"Unexpected token '{t}'")
             self.consume_whitespace()
