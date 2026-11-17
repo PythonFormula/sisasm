@@ -1,0 +1,65 @@
+from parser import (
+    Program,
+    Expression,
+    IntLiteral,
+    VariableRef,
+    Instruction,
+    LetInst,
+    PrintInst
+)
+
+VarValType = int
+
+
+class ExecutionEnvironment:
+    variable_values: dict[str, VarValType]
+    line: int
+    program: Program
+    output_buffer: str
+
+    def __init__(self, program: Program) -> None:
+        self.variable_values = {}
+        self.line = 0
+        self.program = program
+        self.output_buffer = ""
+
+    @staticmethod
+    def value_to_string(val: VarValType) -> str:
+        if isinstance(val, int):
+            return str(val)
+        else:
+            raise ValueError(f"Invalid value type '{type(val)}'")
+
+    def evaluate_expression(self, expr: Expression) -> VarValType:
+        if isinstance(expr, IntLiteral):
+            return expr.num
+        elif isinstance(expr, VariableRef):
+            return self.variable_values[expr.var_name]
+        else:
+            raise ValueError(f"Invalid expression type '{type(expr)}'")
+
+    def execute_instruction(self, inst: Instruction) -> None:
+        if isinstance(inst, LetInst):
+            self.variable_values[inst.var.var_name] = self.evaluate_expression(
+                inst.value)
+        elif isinstance(inst, PrintInst):
+            self.output_buffer += f"{self.value_to_string(self.evaluate_expression(inst.value))}\n"
+        else:
+            raise ValueError(f"Invalid instruction type '{type(inst)}'")
+
+    def np_exec(self) -> tuple[str, int]:
+        self.output_buffer = ""
+        for instruction in self.program:
+            try:
+                self.execute_instruction(instruction)
+            except BaseException as e:
+                self.output_buffer += f"Error occured during execution: {e}\n"
+                return self.output_buffer, 1
+        return self.output_buffer, 0
+
+    def ip_exec(self) -> int:
+        self.output_buffer = ""
+        for instruction in self.program:
+            self.execute_instruction(instruction)
+            print(self.output_buffer, end="")
+        return 0
