@@ -60,6 +60,10 @@ class ExecutionEnvironment:
     def ip_exec(self) -> int:
         self.output_buffer = ""
         for instruction in self.program:
-            self.execute_instruction(instruction)
+            try:
+                self.execute_instruction(instruction)
+            except BaseException as e:
+                print(f"Error occured during execution: {e}\n")
+                return 1
             print(self.output_buffer, end="")
         return 0
