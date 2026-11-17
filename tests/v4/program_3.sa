@@ -1,0 +1,8 @@
+LET c=12
+LET d=1
+LABEL silmukka
+PRINT c
+DEC c d
+JUMP jatka IF c==1
+GOTO silmukka
+LABEL jatka

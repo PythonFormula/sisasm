@@ -1,0 +1,7 @@
+LET a=27
+LABEL alku
+PRINT a
+INC a 1
+JUMP loppu IF a==32
+GOTO alku
+LABEL loppu

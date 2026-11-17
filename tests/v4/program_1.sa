@@ -1,0 +1,6 @@
+LET a=13
+JUMP loppu IF a==13
+INC a 10
+INC a 15
+LABEL loppu
+PRINT a
