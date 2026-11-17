@@ -13,6 +13,7 @@ class TokenType(Enum):
     NEWLINE = auto()
     INC = auto()
     DEC = auto()
+    LABEL = auto()
 
 
 class Token:
@@ -55,6 +56,8 @@ class Lexer(PointerClass[str]):
                     tokens.append(Token(TokenType.INC, buffer))
                 elif buffer == "DEC":
                     tokens.append(Token(TokenType.DEC, buffer))
+                elif buffer == "LABEL":
+                    tokens.append(Token(TokenType.LABEL, buffer))
                 else:
                     tokens.append(Token(TokenType.TEXT, buffer))
             elif c.isdigit():

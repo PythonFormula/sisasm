@@ -67,9 +67,11 @@ class DecInst(Instruction):
 
 class Program:
     instructions: list[Instruction]
+    labels: dict[str, int]
 
     def __init__(self) -> None:
         self.instructions = []
+        self.labels = {}
 
 
 class Parser(PointerClass[Token]):
@@ -147,6 +149,14 @@ class Parser(PointerClass[Token]):
                     program.instructions.append(IncInst(var, val))
                 else:
                     program.instructions.append(DecInst(var, val))
+            elif t.token_type == TokenType.LABEL:
+                self.consume_whitespace()
+                name_token = self.consume()
+                if name_token is None or name_token.token_type != TokenType.TEXT:
+                    raise SyntaxError("Expected a name after LABEL")
+                name = name_token.content
+                program.labels[name] = len(
+                    program.instructions)
             else:
                 raise SyntaxError(f"Unexpected token '{t}'")
             self.consume_whitespace()
