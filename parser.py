@@ -45,6 +45,26 @@ class LetInst(Instruction):
         self.value = value
 
 
+class IncInst(Instruction):
+    var: VariableRef
+    value: Expression
+
+    def __init__(self, var: VariableRef, value: Expression) -> None:
+        super().__init__()
+        self.var = var
+        self.value = value
+
+
+class DecInst(Instruction):
+    var: VariableRef
+    value: Expression
+
+    def __init__(self, var: VariableRef, value: Expression) -> None:
+        super().__init__()
+        self.var = var
+        self.value = value
+
+
 Program = list[Instruction]
 
 
@@ -110,6 +130,19 @@ class Parser(PointerClass[Token]):
                 val_tokens = self.collect_tokens(TokenType.NEWLINE)
                 val = Parser(val_tokens).parse_expression()
                 program.append(LetInst(var, val))
+            elif t.token_type == TokenType.INC or t.token_type == TokenType.DEC:
+                self.consume_whitespace()
+                var_token = self.consume()
+                if var_token is None or var_token.token_type != TokenType.TEXT:
+                    raise SyntaxError("Invalid variable name after INC")
+                var = VariableRef(var_token.content)
+                self.consume_whitespace()
+                val_tokens = self.collect_tokens(TokenType.NEWLINE)
+                val = Parser(val_tokens).parse_expression()
+                if t.token_type == TokenType.INC:
+                    program.append(IncInst(var, val))
+                else:
+                    program.append(DecInst(var, val))
             else:
                 raise SyntaxError(f"Unexpected token '{t}'")
             self.consume_whitespace()
