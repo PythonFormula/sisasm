@@ -8,10 +8,12 @@ from parser import (
     PrintInst,
     IncInst,
     DecInst,
-    GotoInst
+    GotoInst,
+    EqComparison,
+    JumpInst
 )
 
-VarValType = int
+VarValType = int | bool
 
 
 class ExecutionEnvironment:
@@ -30,6 +32,8 @@ class ExecutionEnvironment:
     def value_to_string(val: VarValType) -> str:
         if isinstance(val, int):
             return str(val)
+        elif isinstance(val, bool):
+            return "true" if val else "false"
         else:
             raise ValueError(f"Invalid value type '{type(val)}'")
 
@@ -38,6 +42,8 @@ class ExecutionEnvironment:
             return expr.num
         elif isinstance(expr, VariableRef):
             return self.variable_values[expr.var_name]
+        elif isinstance(expr, EqComparison):
+            return self.evaluate_expression(expr.a) == self.evaluate_expression(expr.b)
         else:
             raise ValueError(f"Invalid expression type '{type(expr)}'")
 
@@ -55,6 +61,13 @@ class ExecutionEnvironment:
                 inst.value)
         elif isinstance(inst, GotoInst):
             self.line = self.program.labels[inst.label]-1
+        elif isinstance(inst, JumpInst):
+            evaluated = self.evaluate_expression(inst.condition)
+            if not isinstance(evaluated, bool):
+                raise RuntimeError(
+                    f"Jump condition '{inst}' resulted in a non-boolean value")
+            if evaluated:
+                self.line = self.program.labels[inst.label]-1
         else:
             raise ValueError(f"Invalid instruction type '{type(inst)}'")
 
