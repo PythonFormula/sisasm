@@ -11,6 +11,8 @@ class TokenType(Enum):
     MINUS = auto()
     SPACE = auto()
     NEWLINE = auto()
+    INC = auto()
+    DEC = auto()
 
 
 class Token:
@@ -49,6 +51,10 @@ class Lexer(PointerClass[str]):
                     tokens.append(Token(TokenType.LET, buffer))
                 elif buffer == "PRINT":
                     tokens.append(Token(TokenType.PRINT, buffer))
+                elif buffer == "INC":
+                    tokens.append(Token(TokenType.INC, buffer))
+                elif buffer == "DEC":
+                    tokens.append(Token(TokenType.DEC, buffer))
                 else:
                     tokens.append(Token(TokenType.TEXT, buffer))
             elif c.isdigit():
