@@ -1,0 +1,11 @@
+GOTO kohta1
+LABEL kohta3
+PRINT a
+GOTO loppu
+LABEL kohta2
+DEC a 10
+GOTO kohta3
+LABEL kohta1
+LET a=53
+GOTO kohta2
+LABEL loppu

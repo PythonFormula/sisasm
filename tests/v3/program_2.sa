@@ -1,0 +1,11 @@
+LET a=88
+GOTO kohta1
+INC a 10
+INC a 20
+LABEL kohta1
+PRINT a
+GOTO kohta2
+DEC a 20
+DEC a 30
+LABEL kohta2
+PRINT a

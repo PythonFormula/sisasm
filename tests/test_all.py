@@ -29,3 +29,9 @@ def test_v2():
     assert get_output(2, 2).strip() == get_result(2, 2).strip()
     assert get_output(2, 3).strip() == get_result(2, 3).strip()
     assert get_output(2, 4).strip() == get_result(2, 4).strip()
+
+
+def test_v3():
+    assert get_output(3, 1).strip() == get_result(3, 1).strip()
+    assert get_output(3, 2).strip() == get_result(3, 2).strip()
+    assert get_output(3, 3).strip() == get_result(3, 3).strip()

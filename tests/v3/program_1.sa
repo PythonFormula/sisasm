@@ -1,0 +1,6 @@
+LET a=29
+GOTO loppu
+INC a 10
+INC a 20
+LABEL loppu
+PRINT a
