@@ -84,7 +84,6 @@ class Parser(PointerClass[Token]):
             next = Parser(self.items[1:]).parse_expression()
             if not isinstance(next, IntLiteral):
                 raise SyntaxError(f"- sing not followed by an integer")
-            check_all_consumed()
             return IntLiteral(-next.num)
         elif t.token_type == TokenType.NUMBER:
             check_all_consumed()
@@ -113,4 +112,5 @@ class Parser(PointerClass[Token]):
                 program.append(LetInst(var, val))
             else:
                 raise SyntaxError(f"Unexpected token '{t}'")
+            self.consume_whitespace()
         return program

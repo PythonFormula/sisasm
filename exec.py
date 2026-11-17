@@ -66,4 +66,5 @@ class ExecutionEnvironment:
                 print(f"Error occured during execution: {e}\n")
                 return 1
             print(self.output_buffer, end="")
+            self.output_buffer = ""
         return 0
