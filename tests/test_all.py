@@ -22,3 +22,10 @@ def test_v1():
     assert get_output(1, 1).strip() == get_result(1, 1).strip()
     assert get_output(1, 2).strip() == get_result(1, 2).strip()
     assert get_output(1, 3).strip() == get_result(1, 3).strip()
+
+
+def test_v2():
+    assert get_output(2, 1).strip() == get_result(2, 1).strip()
+    assert get_output(2, 2).strip() == get_result(2, 2).strip()
+    assert get_output(2, 3).strip() == get_result(2, 3).strip()
+    assert get_output(2, 4).strip() == get_result(2, 4).strip()

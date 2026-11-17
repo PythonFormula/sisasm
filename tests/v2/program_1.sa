@@ -1,0 +1,3 @@
+LET a=20
+INC a 10
+PRINT a

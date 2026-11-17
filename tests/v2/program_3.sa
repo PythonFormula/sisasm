@@ -1,0 +1,9 @@
+LET a=100
+LET b=50
+
+DEC a b
+PRINT a
+PRINT b
+
+INC a b
+PRINT a

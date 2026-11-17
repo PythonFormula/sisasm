@@ -1,0 +1,14 @@
+LET d=1000
+LET a=100
+LET b=10
+LET c=1
+
+INC d a
+INC d b
+INC d c
+PRINT d
+
+DEC d a
+DEC d b
+DEC d c
+PRINT d
