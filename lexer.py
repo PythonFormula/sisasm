@@ -21,6 +21,9 @@ class Token:
         self.token_type = token_type
         self.content = content
 
+    def __repr__(self) -> str:
+        return f"{self.token_type.name}<{self.content}>"
+
 
 class Lexer(PointerClass[str]):
     def __init__(self, items: str) -> None:
