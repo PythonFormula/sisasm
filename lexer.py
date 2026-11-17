@@ -46,7 +46,7 @@ class Lexer(PointerClass[str]):
                 tokens.append(Token(TokenType.NEWLINE, c))
             elif c.isalpha():
                 buffer = c
-                while (c := self.peek()) and c.isalpha():
+                while (c := self.peek()) and c.isalnum():
                     buffer += c
                     self.consume()
                 if buffer == "LET":
