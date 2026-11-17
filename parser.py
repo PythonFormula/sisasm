@@ -23,6 +23,16 @@ class VariableRef(Expression):
         self.var_name = var_name
 
 
+class EqComparison(Expression):
+    a: Expression
+    b: Expression
+
+    def __init__(self, a: Expression, b: Expression) -> None:
+        super().__init__()
+        self.a = a
+        self.b = b
+
+
 class Instruction:
     pass
 
@@ -113,27 +123,35 @@ class Parser(PointerClass[Token]):
         return tokens
 
     def parse_expression(self) -> Expression:
-        def check_all_consumed():
-            self.consume_whitespace()
-            if self.peek() is not None:
-                raise SyntaxError(f"Expression too long")
+        def parse_singelton() -> Expression | None:
+            t = self.consume()
+            if t is None:
+                return None
+            elif t.token_type == TokenType.TEXT:
+                return VariableRef(t.content)
+            elif t.token_type == TokenType.NUMBER:
+                return IntLiteral(int(t.content))
+            elif t.token_type == TokenType.MINUS:
+                next = parse_singelton()
+                if not isinstance(next, IntLiteral):
+                    raise SyntaxError(f"- sing not followed by an integer")
+                return IntLiteral(-next.num)
+            else:
+                raise SyntaxError(
+                    f"Invalid token in singelton expression '{t}'")
+
         self.consume_whitespace()
-        t = self.consume()
-        if t is None:
-            raise SyntaxError(f"Empty expression")
-        elif t.token_type == TokenType.TEXT:
-            check_all_consumed()
-            return VariableRef(t.content)
-        elif t.token_type == TokenType.MINUS:
-            next = Parser(self.items[1:]).parse_expression()
-            if not isinstance(next, IntLiteral):
-                raise SyntaxError(f"- sing not followed by an integer")
-            return IntLiteral(-next.num)
-        elif t.token_type == TokenType.NUMBER:
-            check_all_consumed()
-            return IntLiteral(int(t.content))
-        else:
-            raise SyntaxError(f"Invalid token in expression '{t}'")
+        left = parse_singelton()
+        if not left:
+            raise SyntaxError("Empty expression")
+        if ((t := self.peek()) and t.token_type == TokenType.EQUALS) and ((t := self.peek(1)) and t.token_type == TokenType.EQUALS):
+            self.consume()
+            self.consume()
+            right = parse_singelton()
+            if not right:
+                raise SyntaxError(f"Expected expression after '=='")
+            left = EqComparison(left, right)
+        return left
 
     def parse_program(self) -> Program:
         self.consume_whitespace()
