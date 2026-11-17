@@ -7,7 +7,8 @@ from parser import (
     LetInst,
     PrintInst,
     IncInst,
-    DecInst
+    DecInst,
+    GotoInst
 )
 
 VarValType = int
@@ -52,14 +53,17 @@ class ExecutionEnvironment:
         elif isinstance(inst, DecInst):
             self.variable_values[inst.var.var_name] -= self.evaluate_expression(
                 inst.value)
+        elif isinstance(inst, GotoInst):
+            self.line = self.program.labels[inst.label]-1
         else:
             raise ValueError(f"Invalid instruction type '{type(inst)}'")
 
     def np_exec(self) -> tuple[str, int]:
         self.output_buffer = ""
-        for instruction in self.program.instructions:
+        while self.line < len(self.program.instructions):
             try:
-                self.execute_instruction(instruction)
+                self.execute_instruction(self.program.instructions[self.line])
+                self.line += 1
             except BaseException as e:
                 self.output_buffer += f"Error occured during execution: {e}\n"
                 return self.output_buffer, 1
@@ -67,9 +71,10 @@ class ExecutionEnvironment:
 
     def ip_exec(self) -> int:
         self.output_buffer = ""
-        for instruction in self.program.instructions:
+        while self.line < len(self.program.instructions):
             try:
-                self.execute_instruction(instruction)
+                self.execute_instruction(self.program.instructions[self.line])
+                self.line += 1
             except BaseException as e:
                 print(f"Error occured during execution: {e}\n")
                 return 1
