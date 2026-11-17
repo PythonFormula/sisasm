@@ -73,6 +73,16 @@ class GotoInst(Instruction):
         self.label = label
 
 
+class JumpInst(Instruction):
+    label: str
+    condition: Expression
+
+    def __init__(self, label: str, condition: Expression) -> None:
+        super().__init__()
+        self.label = label
+        self.condition = condition
+
+
 class Program:
     instructions: list[Instruction]
     labels: dict[str, int]
@@ -169,9 +179,22 @@ class Parser(PointerClass[Token]):
                 self.consume_whitespace()
                 name_token = self.consume()
                 if name_token is None or name_token.token_type != TokenType.TEXT:
-                    raise SyntaxError("Expected a name after LABEL")
+                    raise SyntaxError("Expected a label name after GOTO")
                 name = name_token.content
                 program.instructions.append(GotoInst(name))
+            elif t.token_type == TokenType.JUMP:
+                self.consume_whitespace()
+                name_token = self.consume()
+                if name_token is None or name_token.token_type != TokenType.TEXT:
+                    raise SyntaxError("Expected a label name after JUMP")
+                name = name_token.content
+                self.consume_whitespace()
+                if_token = self.consume()
+                if if_token is None or if_token.token_type != TokenType.IF:
+                    raise SyntaxError("Expected IF after JUMP label name")
+                condition_tokens = self.collect_tokens(TokenType.NEWLINE)
+                condition = Parser(condition_tokens).parse_expression()
+                program.instructions.append(JumpInst(name, condition))
             else:
                 raise SyntaxError(f"Unexpected token '{t}'")
             self.consume_whitespace()
