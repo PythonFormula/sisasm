@@ -1,6 +1,6 @@
 from typing import Sequence
-from pointer import PointerClass
-from lexer import Token, TokenType
+from src.pointer import PointerClass
+from src.lexer import Token, TokenType
 
 
 class Expression:

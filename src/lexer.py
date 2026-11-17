@@ -1,4 +1,4 @@
-from pointer import PointerClass
+from src.pointer import PointerClass
 from enum import Enum, auto
 
 

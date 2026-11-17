@@ -1,4 +1,4 @@
-from parser import (
+from src.parser import (
     Program,
     Expression,
     IntLiteral,

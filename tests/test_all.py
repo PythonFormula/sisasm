@@ -1,7 +1,7 @@
 import pytest
-from lexer import Lexer
-from parser import Parser
-from exec import ExecutionEnvironment
+from src.lexer import Lexer
+from src.parser import Parser
+from src.exec import ExecutionEnvironment
 
 
 def get_output(version: int, num: int) -> str:
