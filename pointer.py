@@ -1,13 +1,13 @@
-from typing import Generic, TypeVar
+from typing import Generic, TypeVar, Sequence
 
 T = TypeVar("T")
 
 
 class PointerClass(Generic[T]):
-    items: list[T]
+    items: Sequence[T]
     pointer: int
 
-    def __init__(self, items: list[T]) -> None:
+    def __init__(self, items: Sequence[T]) -> None:
         self.items = items
         self.pointer = 0
 

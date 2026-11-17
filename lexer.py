@@ -23,7 +23,7 @@ class Token:
 
 
 class Lexer(PointerClass[str]):
-    def __init__(self, items: list[str]) -> None:
+    def __init__(self, items: str) -> None:
         super().__init__(items)
 
     def tokenize(self) -> list[Token]:

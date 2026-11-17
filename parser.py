@@ -1,3 +1,4 @@
+from typing import Sequence
 from pointer import PointerClass
 from lexer import Token, TokenType
 
@@ -48,7 +49,7 @@ Program = list[Instruction]
 
 
 class Parser(PointerClass[Token]):
-    def __init__(self, items: list[Token]) -> None:
+    def __init__(self, items: Sequence[Token]) -> None:
         super().__init__(items)
 
     def consume_whitespace(self) -> None:
