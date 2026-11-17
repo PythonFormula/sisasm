@@ -65,6 +65,14 @@ class DecInst(Instruction):
         self.value = value
 
 
+class GotoInst(Instruction):
+    label: str
+
+    def __init__(self, label: str) -> None:
+        super().__init__()
+        self.label = label
+
+
 class Program:
     instructions: list[Instruction]
     labels: dict[str, int]
@@ -157,6 +165,13 @@ class Parser(PointerClass[Token]):
                 name = name_token.content
                 program.labels[name] = len(
                     program.instructions)
+            elif t.token_type == TokenType.GOTO:
+                self.consume_whitespace()
+                name_token = self.consume()
+                if name_token is None or name_token.token_type != TokenType.TEXT:
+                    raise SyntaxError("Expected a name after LABEL")
+                name = name_token.content
+                program.instructions.append(GotoInst(name))
             else:
                 raise SyntaxError(f"Unexpected token '{t}'")
             self.consume_whitespace()
