@@ -1,0 +1,4 @@
+LET a=100
+LET b=200
+PRINT a
+PRINT b

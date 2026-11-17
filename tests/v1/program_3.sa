@@ -1,0 +1,8 @@
+LET c=10000
+LET d=-10000
+PRINT c
+PRINT d
+LET c=10
+LET d=-10
+PRINT c
+PRINT d
