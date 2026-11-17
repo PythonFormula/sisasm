@@ -15,6 +15,8 @@ class TokenType(Enum):
     DEC = auto()
     LABEL = auto()
     GOTO = auto()
+    JUMP = auto()
+    IF = auto()
 
 
 class Token:
@@ -61,6 +63,10 @@ class Lexer(PointerClass[str]):
                     tokens.append(Token(TokenType.LABEL, buffer))
                 elif buffer == "GOTO":
                     tokens.append(Token(TokenType.GOTO, buffer))
+                elif buffer == "JUMP":
+                    tokens.append(Token(TokenType.JUMP, buffer))
+                elif buffer == "IF":
+                    tokens.append(Token(TokenType.IF, buffer))
                 else:
                     tokens.append(Token(TokenType.TEXT, buffer))
             elif c.isdigit():
