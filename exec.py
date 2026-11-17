@@ -5,7 +5,9 @@ from parser import (
     VariableRef,
     Instruction,
     LetInst,
-    PrintInst
+    PrintInst,
+    IncInst,
+    DecInst
 )
 
 VarValType = int
@@ -44,6 +46,12 @@ class ExecutionEnvironment:
                 inst.value)
         elif isinstance(inst, PrintInst):
             self.output_buffer += f"{self.value_to_string(self.evaluate_expression(inst.value))}\n"
+        elif isinstance(inst, IncInst):
+            self.variable_values[inst.var.var_name] += self.evaluate_expression(
+                inst.value)
+        elif isinstance(inst, DecInst):
+            self.variable_values[inst.var.var_name] -= self.evaluate_expression(
+                inst.value)
         else:
             raise ValueError(f"Invalid instruction type '{type(inst)}'")
 
