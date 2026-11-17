@@ -28,6 +28,11 @@ class ExecutionEnvironment:
         self.program = program
         self.output_buffer = ""
 
+    def reset(self) -> None:
+        self.variable_values = {}
+        self.line = 0
+        self.output_buffer = ""
+
     @staticmethod
     def value_to_string(val: VarValType) -> str:
         if isinstance(val, int):
@@ -72,7 +77,7 @@ class ExecutionEnvironment:
             raise ValueError(f"Invalid instruction type '{type(inst)}'")
 
     def np_exec(self) -> tuple[str, int]:
-        self.output_buffer = ""
+        self.reset()
         while self.line < len(self.program.instructions):
             try:
                 self.execute_instruction(self.program.instructions[self.line])
@@ -83,7 +88,7 @@ class ExecutionEnvironment:
         return self.output_buffer, 0
 
     def ip_exec(self) -> int:
-        self.output_buffer = ""
+        self.reset()
         while self.line < len(self.program.instructions):
             try:
                 self.execute_instruction(self.program.instructions[self.line])
