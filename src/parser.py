@@ -351,7 +351,7 @@ class Parser(PointerClass[Token]):
             left = EqComparison(left, right)
         return left
 
-    def parse_program(self) -> Program:
+    def parse_program(self, strict_var_names: bool = False) -> Program:
         """Parses the tokens into a program.
 
         Raises:
@@ -377,6 +377,11 @@ class Parser(PointerClass[Token]):
                 var_token = self.consume()
                 if var_token is None or var_token.token_type != TokenType.TEXT:
                     raise SyntaxError("Invalid variable name after LET")
+                if strict_var_names and var_token.content not in ("a", "b", "c", "d"):
+                    raise SyntaxError(
+                        f"Invalid var name '{var_token.content}', "
+                        "disable stric var names to allow this"
+                    )
                 var = VariableRef(var_token.content)
                 if not (t := self.consume()) or t.token_type != TokenType.EQUALS:
                     raise SyntaxError("No = after variable name in LET")

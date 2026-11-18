@@ -17,11 +17,12 @@ def main():
     """The main function that gets executed when this file is called."""
     argparser = argparse.ArgumentParser()
     argparser.add_argument("source")
+    argparser.add_argument("-v", action="store_true")
     args = argparser.parse_args()
     with open(args.source, "r", encoding="utf-8") as f:
         source = f.read()
     tokens = Lexer(source).tokenize()
-    program = Parser(tokens).parse_program()
+    program = Parser(tokens).parse_program(strict_var_names=args.v)
     eenv = ExecutionEnvironment(program)
     eenv.ip_exec()
 

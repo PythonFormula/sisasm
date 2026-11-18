@@ -78,7 +78,9 @@ Ohjelma (`Program`) koostuu käskyistä (`Instruction`). Käsky alkaa avainsanal
 
 ### Koodin rajoitukset
 
-Villen tehtävässä oli annettu paljon rajoituksia, joiden poistaminen silti läpäisee tehtävän, koska saa olettaa että annettu koodi on aina virheetöntä. Toisin sanoen siis virheistä ei tarvitse valittaa, joten voin antaa enemmän vapauksia. Esimerkiksi muuttujien nimenä sai olla vain a, b, c tai d. Tämä kääntäjä kuitenkin hyväksyy minkä tahansa nimen muuttujalle. Toinen iso ero toteutuksessa on se, että muttujalle voi antaa totuusarvon esimerkiksi `LET a = b==c`, ja tätä voi myöhemmin käyttää JUMP käskyn ehdossa esim `JUMP alku IF a`.
+Villen tehtävässä oli annettu paljon rajoituksia, joiden poistaminen silti läpäisee tehtävän, koska saa olettaa että annettu koodi on aina virheetöntä. Toisin sanoen siis virheistä ei tarvitse valittaa, joten voin antaa enemmän vapauksia. Esimerkiksi muuttujien nimenä sai olla vain a, b, c tai d. Tämä tulkki kuitenkin hyväksyy minkä tahansa nimen muuttujalle. Toinen iso ero toteutuksessa on se, että muttujalle voi antaa totuusarvon esimerkiksi `LET a = b==c`, ja tätä voi myöhemmin käyttää JUMP käskyn ehdossa esim `JUMP alku IF a`.
+
+Koodinsuoritus komennossa voi käyttää `-v` flagia, jos haluaa tulkin hyväksyvän muutujan nimeksi vain a, b, c tai d.
 
 ## Tekoälyn käyttö
 
