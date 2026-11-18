@@ -5,6 +5,12 @@ from src.exec import ExecutionEnvironment
 
 
 def get_output(version: int, num: int) -> str:
+    """Gets the output that gets produced by a given test program.
+
+    Args:
+        version(int): The version (v1-v4) which the test program belongs to.
+        num(int): The number of the program inside the version's folder.
+    """
     with open(f"tests\\v{version}\\program_{num}.sa", "r") as f:
         source = f.read()
     tokens = Lexer(source).tokenize()
@@ -14,6 +20,12 @@ def get_output(version: int, num: int) -> str:
 
 
 def get_result(version: int, num: int) -> str:
+    """Gets the correct output for a certain test program.
+
+    Args:
+        version(int): The version (v1-v4) which the test program belongs to.
+        num(int): The number of the program inside the version's folder.
+    """
     with open(f"tests\\v{version}\\result_{num}.txt", "r") as f:
         return f.read()
 
