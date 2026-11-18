@@ -74,7 +74,11 @@ Ohjelma (`Program`) koostuu käskyistä (`Instruction`). Käsky alkaa avainsanal
 
 `VarValType` tyyppi kertoo mitä tyyppejä muuttjien (tai expressioiden) arvot voivat olla.
 
-`ExecutionEnvironment` on luokka jolla suoritetaan ohjelmia. `evaluate_expression()` nimensä mukaan evaluoi expression. `execute_instruction()` suorittaa yhden käskyn, joka sille annetaan. `np_exec()` ja `ip_exec()` molemmat suorittavat koodia, mutta eroavat tulostuksessa. `np_exec()` eli **n**o **p**rint execution palauttaa vain ohjelman tuloseen, eikä tulosta näytölle mitään. Tämä on se, mitä varsinainen tehtävä villessä halusi, ja tätä käytetään myös yksikkötesteissä. `ip_exec()` eli **i**mmidiate **p**rint execution tulostaa ulostulopuskurin (`output_buffer`) joka käskyn suorittamisen jälkeen. Tätä tapaa käytetään kun koodia suoritetaan `cli.py` ohjelmalla tai itse `sisasm` käskyllä.
+`ExecutionEnvironment` on luokka jolla suoritetaan ohjelmia. `evaluate_expression()` nimensä mukaan evaluoi expression. `execute_instruction()` suorittaa yhden käskyn, joka sille annetaan. `np_exec()` ja `ip_exec()` molemmat suorittavat koko ohjelman, mutta eroavat tulostuksessa. `np_exec()` eli **n**o **p**rint execution palauttaa vain ohjelman tuloseen, eikä tulosta näytölle mitään. Tämä on se, mitä varsinainen tehtävä villessä halusi, ja tätä käytetään myös yksikkötesteissä. `ip_exec()` eli **i**mmidiate **p**rint execution tulostaa ulostulopuskurin (`output_buffer`) joka käskyn suorittamisen jälkeen. Tätä tapaa käytetään kun koodia suoritetaan `cli.py` ohjelmalla tai itse `sisasm` käskyllä.
+
+### Koodin rajoitukset
+
+Villen tehtävässä oli annettu paljon rajoituksia, joiden poistaminen silti läpäisee tehtävän, koska saa olettaa että annettu koodi on aina virheetöntä. Toisin sanoen siis virheistä ei tarvitse valittaa, joten voin antaa enemmän vapauksia. Esimerkiksi muuttujien nimenä sai olla vain a, b, c tai d. Tämä kääntäjä kuitenkin hyväksyy minkä tahansa nimen muuttujalle. Toinen iso ero toteutuksessa on se, että muttujalle voi antaa totuusarvon esimerkiksi `LET a = b==c`, ja tätä voi myöhemmin käyttää JUMP käskyn ehdossa esim `JUMP alku IF a`.
 
 ## Tekoälyn käyttö
 
