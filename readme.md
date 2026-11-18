@@ -10,6 +10,8 @@ Lataa repo itsellesi komennolla `git clone https://github.com/PythonFormula/sisa
 
 Asenna python kirjastot komennoll `uv sync` tai jos uv ei ole asennettuna, niin `pip install . --group dev`
 
+Tällä hetkelä ainut ulkoinen kirjasto on pytest, joten jos et aio suorittaa yksikkötestejä, niin tätä ei tarvitse tehdä.
+
 Venv:in aktivointi: `.venv\Scripts\Activate.ps1`
 
 ## Testaaminen
