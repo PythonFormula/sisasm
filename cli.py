@@ -21,8 +21,12 @@ def main():
     args = argparser.parse_args()
     with open(args.source, "r", encoding="utf-8") as f:
         source = f.read()
-    tokens = Lexer(source).tokenize()
-    program = Parser(tokens).parse_program(strict_var_names=args.v)
+    try:
+        tokens = Lexer(source).tokenize()
+        program = Parser(tokens).parse_program(strict_var_names=args.v)
+    except BaseException as e:  # pylint: disable=broad-exception-caught
+        print(f"Error occured during compiling: {e}")
+        return
     eenv = ExecutionEnvironment(program)
     eenv.ip_exec()
 
