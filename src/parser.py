@@ -329,10 +329,10 @@ class Parser(PointerClass[Token]):
             elif t.token_type == TokenType.NUMBER:
                 return IntLiteral(int(t.content))
             elif t.token_type == TokenType.MINUS:
-                next = parse_singelton()
-                if not isinstance(next, IntLiteral):
-                    raise SyntaxError(f"- sing not followed by an integer")
-                return IntLiteral(-next.num)
+                next_expr = parse_singelton()
+                if not isinstance(next_expr, IntLiteral):
+                    raise SyntaxError("- sing not followed by an integer")
+                return IntLiteral(-next_expr.num)
             else:
                 raise SyntaxError(f"Invalid token in singelton expression '{t}'")
 
@@ -347,7 +347,7 @@ class Parser(PointerClass[Token]):
             self.consume()
             right = parse_singelton()
             if not right:
-                raise SyntaxError(f"Expected expression after '=='")
+                raise SyntaxError("Expected expression after '=='")
             left = EqComparison(left, right)
         return left
 
@@ -379,7 +379,7 @@ class Parser(PointerClass[Token]):
                     raise SyntaxError("Invalid variable name after LET")
                 var = VariableRef(var_token.content)
                 if not (t := self.consume()) or t.token_type != TokenType.EQUALS:
-                    raise SyntaxError(f"No = after variable name in LET")
+                    raise SyntaxError("No = after variable name in LET")
                 val_tokens = self.collect_tokens(TokenType.NEWLINE)
                 val = Parser(val_tokens).parse_expression()
                 program.instructions.append(LetInst(var, val))

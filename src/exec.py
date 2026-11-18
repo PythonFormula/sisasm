@@ -1,5 +1,6 @@
 """Executes programs."""
 
+from typing import TypeAlias
 from src.parser import (
     Program,
     Expression,
@@ -16,7 +17,7 @@ from src.parser import (
 )
 
 # The types that a variable or an expression can have.
-VarValType = int | bool
+VarValType: TypeAlias = int | bool
 
 
 class ExecutionEnvironment:
@@ -146,7 +147,7 @@ class ExecutionEnvironment:
                 self.line += 1
             # Catching BaseException is fine, becouse we end execution
             # immidiately and put the error to the output.
-            except BaseException as e:
+            except BaseException as e:  # pylint: disable=broad-exception-caught
                 self.output_buffer += f"Error occured during execution: {e}\n"
                 return self.output_buffer, 1
         return self.output_buffer, 0
@@ -164,7 +165,7 @@ class ExecutionEnvironment:
                 self.line += 1
             # Catching BaseException is fine, becouse we end execution
             # immidiately and print the error message.
-            except BaseException as e:
+            except BaseException as e:  # pylint: disable=broad-exception-caught
                 print(f"Error occured during execution: {e}\n")
                 return 1
             print(self.output_buffer, end="")

@@ -7,8 +7,8 @@ Typical usage:
     tokens = Lexer(source_code).tokenize()
 """
 
-from src.pointer import PointerClass
 from enum import Enum, auto
+from src.pointer import PointerClass
 
 
 class TokenType(Enum):
@@ -16,6 +16,7 @@ class TokenType(Enum):
 
     Values are automatically generated integers.
     """
+
     LET = auto()
     PRINT = auto()
     EQUALS = auto()
@@ -39,6 +40,7 @@ class Token:
         token_type(TokenType): Type of the token.
         content(str): The string in the source code that this token represents.
     """
+
     token_type: TokenType
     content: str
 
@@ -47,15 +49,14 @@ class Token:
 
         Args:
             token_type(TokenType): Type of the token.
-            content(str): The string in the source code that this token 
+            content(str): The string in the source code that this token
               represents.
         """
         self.token_type = token_type
         self.content = content
 
     def __repr__(self) -> str:
-        """Returns the string representation of the token.
-        """
+        """Returns the string representation of the token."""
         return f"{self.token_type.name}<{self.content}>"
 
 
@@ -81,7 +82,7 @@ class Lexer(PointerClass[str]):
             tokens(list[Token]): A list of tokens representing the source code.
         """
         tokens: list[Token] = []
-        while (c := self.consume()):
+        while c := self.consume():
             # Single character tokens
             if c == "=":
                 tokens.append(Token(TokenType.EQUALS, c))

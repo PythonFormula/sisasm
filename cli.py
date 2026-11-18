@@ -18,7 +18,7 @@ def main():
     argparser = argparse.ArgumentParser()
     argparser.add_argument("source")
     args = argparser.parse_args()
-    with open(args.source, "r") as f:
+    with open(args.source, "r", encoding="utf-8") as f:
         source = f.read()
     tokens = Lexer(source).tokenize()
     program = Parser(tokens).parse_program()
