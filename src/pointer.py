@@ -1,6 +1,6 @@
 """Ths module includes the PointerClass class.
 
-PointerClass is a parent class for all classes that need to iterate over items 
+PointerClass is a parent class for all classes that need to iterate over items
 using a pointer.
 """
 
@@ -11,7 +11,7 @@ T = TypeVar("T")
 
 class PointerClass(Generic[T]):
     """
-    A parent class for all classes that need to iterate over items using a 
+    A parent class for all classes that need to iterate over items using a
     pointer.
 
     Attributes:
@@ -19,6 +19,7 @@ class PointerClass(Generic[T]):
         pointer(int): The pointer, that stores the index of the current item.
 
     """
+
     items: Sequence[T]
     pointer: int
 
@@ -44,15 +45,16 @@ class PointerClass(Generic[T]):
             item(T | None): The item at the given location, None if the index is
               invalid.
         """
-        if self.pointer+amount > len(self.items)-1:
+        try:
+            return self.items[self.pointer + amount]
+        except IndexError:
             return None
-        return self.items[self.pointer+amount]
 
     def consume(self) -> T | None:
         """
         Get the current item and move to the next.
 
-        Returns the item the pointer is pointing to, and increments the pointer 
+        Returns the item the pointer is pointing to, and increments the pointer
         by 1.
 
         Returns:
@@ -63,4 +65,4 @@ class PointerClass(Generic[T]):
         if self.pointer == len(self.items):
             return None
         self.pointer += 1
-        return self.items[self.pointer-1]
+        return self.items[self.pointer - 1]
